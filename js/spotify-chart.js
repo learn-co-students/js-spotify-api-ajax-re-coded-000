@@ -62,5 +62,5 @@ function success(parsedJSON) {
   var data = chartData(names, popularity);
   var ctx = document.getElementById("spotify-chart").getContext("2d");
   new Chart(ctx).Bar(data);
-  var signature = "Fatima Mohammad";
+  var signature = "Goory Hamed";
 }
