@@ -17,20 +17,32 @@ $(function() {
 
 function extractTop10Tracks(tracks) {
   // your code here
+   return tracks.slice(0,10);
 }
 
 function extractPopularity(tracks) {
   // your code here
+  return $.map(tracks,function(track){
+    return track.popularity;
+  })
 }
 
 function extractNames(tracks) {
   // your code here
+   return $.map(tracks,function(track){
+    return track.name;
+  })
 }
 
 function chartData(labels, inputData) {
   // your code here
-
   // use the dataSetProperties variable defined above if it helps
+var data={};
+  data.labels=labels;
+  data.datasets=[dataSetProperties];
+  data.datasets[0].data=inputData;
+  return data;
+  
 }
 
 function getSpotifyTracks(callback){
@@ -39,6 +51,14 @@ function getSpotifyTracks(callback){
   // parameter the data it received
 
   // use the url variable defined above if it helps
+
+ $.ajax({
+    url:url,
+    dataType:"json",
+    type: "get",
+    success:callback
+  })
+
 }
 
 function success(parsedJSON) {
@@ -52,4 +72,12 @@ function success(parsedJSON) {
   //  5. make a variable `ctx` and select the canvas with the id of spotify-chart
   //     * also make sure to specify 2d context
   //  6. make a new bar chart!
+
+   var tracks=extractTop10Tracks(parsedJSON.tracks)
+  var labels=extractNames(tracks)
+  var popularity=extractPopularity(tracks)
+  var data=chartData(labels,popularity)
+  var ctx=document.getElementById('spotify-chart').getContext('2d');
+console.log(
+    new Chart(ctx).Bar(data));
 }
