@@ -58,7 +58,7 @@ function chartData(labels, inputData) {
 
 function getSpotifyTracks(callback){
  $.ajax({
-  url: url
+  url: url,
   success: function(result){
     callback(result);
   }
